@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Front-Desk ROI Calculator for Dental Clinics: Missed-Call Revenue Estimator</title>
+<meta name="description" content="Interactive estimator: how much revenue does your dental clinic lose to missed and unanswered calls, and what would an AI phone agent cost? Illustrative estimates with sourced assumptions.">
+<style>
+  :root{
+    --teal:#0e7c7b; --teal-dark:#0a5e5d; --ink:#1d2b2a; --muted:#5b6f6e;
+    --bg:#f6faf9; --card:#ffffff; --line:#dfe9e8; --amber:#b7791f; --amber-bg:#fdf6e7;
+    --green:#1c7c3e; --red:#a33b3b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header.top{background:var(--teal-dark);color:#fff;padding:10px 0;font-size:13px}
+  header.top a{color:#cdeeed}
+  .hero{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-dark) 100%);color:#fff;padding:44px 0 36px}
+  .hero h1{margin:0 0 10px;font-size:30px;line-height:1.25}
+  .hero p.lede{margin:0;max-width:640px;color:#d9efee;font-size:16px}
+  .stat-band{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px}
+  .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:12px 16px;min-width:180px}
+  .stat b{display:block;font-size:22px}
+  .stat span{font-size:12.5px;color:#cfe9e8}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;margin:28px 0;box-shadow:0 2px 10px rgba(14,124,123,.06)}
+  .card h2{margin-top:0;font-size:21px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .field{margin-bottom:18px}
+  .field label{display:flex;justify-content:space-between;font-weight:600;font-size:14px;margin-bottom:6px}
+  .field label output{color:var(--teal-dark);font-weight:700}
+  .field input[type=range]{width:100%;accent-color:var(--teal)}
+  .field input[type=number]{width:110px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .results{background:#f0f7f6;border:1px solid var(--line);border-radius:12px;padding:20px}
+  .kpi{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed var(--line)}
+  .kpi:last-child{border-bottom:none}
+  .kpi .k{font-size:14px;color:var(--muted)}
+  .kpi .v{font-size:20px;font-weight:700;color:var(--ink)}
+  .kpi.hero-kpi .v{font-size:26px;color:var(--teal-dark)}
+  .kpi .v.neg{color:var(--red)}
+  table.src{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+  table.src th,table.src td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.src th{background:#f0f7f6;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  table.src td a{color:var(--teal-dark)}
+  .callout{background:var(--amber-bg);border:1px solid #ecd9a8;border-radius:10px;padding:16px 18px;font-size:14px;margin:18px 0}
+  .callout b{color:var(--amber)}
+  .limits li{margin-bottom:10px}
+  .cta{background:linear-gradient(135deg,#123f3e,#0a5e5d);color:#fff;border-radius:14px;padding:30px;margin:28px 0}
+  .cta h2{margin-top:0}
+  .cta p{color:#cfe9e8}
+  .cta form{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .cta input[type=email]{flex:1;min-width:220px;padding:12px 14px;border-radius:8px;border:none;font-size:15px}
+  .cta button{background:#fff;color:var(--teal-dark);border:none;border-radius:8px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+  .vendors{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+  .vendor-card{flex:1;min-width:240px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .vendor-card h3{margin:0 0 6px;font-size:16px}
+  .vendor-card p{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+  .btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:600;font-size:14px}
+  .btn:hover{background:var(--teal-dark)}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12.5px;color:var(--muted)}
+  .disclosure{background:#fff8e6;border:1px solid #ecd9a8;border-radius:8px;padding:12px 14px;font-size:12.5px;margin:18px 0}
+  .tier{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#e6f2f1;color:var(--teal-dark);margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <strong>Affiliate disclosure:</strong> We may earn a commission if you purchase through links on this page, at no extra cost to you. <a href="#disclosure-full">Full disclosure</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>How much is your dental clinic losing to missed calls?</h1>
+    <p class="lede">An interactive estimator for dental practice owners evaluating AI front-desk / phone agents. Enter your own numbers. Every default assumption is sourced below, and the math is shown, not hidden.</p>
+    <div class="stat-band">
+      <div class="stat"><b>20–35%</b><span>of dental inbound calls go unanswered during business hours (industry observers)</span></div>
+      <div class="stat"><b>82%</b><span>of consumers call a competitor when a business doesn't answer (CallRail 2025)</span></div>
+      <div class="stat"><b>$200–$300</b><span>immediate revenue per missed dental call (Patient Prism 2026)</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>1 &nbsp;·&nbsp; Your practice inputs</h2>
+    <div class="grid">
+      <div>
+        <div class="field">
+          <label>Inbound calls per month <output id="o-calls">600</output></label>
+          <input type="range" id="in-calls" min="100" max="3000" step="50" value="600">
+          <div class="hint">All calls: new patients, existing patients, vendors, insurance.</div>
+        </div>
+        <div class="field">
+          <label>Missed / unanswered call rate <output id="o-miss">30%</output></label>
+          <input type="range" id="in-miss" min="5" max="60" step="1" value="30">
+          <div class="hint">Industry band: 20–35% during business hours; ~38% in a 4,280-call 2026 analysis.</div>
+        </div>
+        <div class="field">
+          <label>Share of missed calls that are new-patient inquiries <output id="o-new">30%</output></label>
+          <input type="range" id="in-new" min="10" max="60" step="1" value="30">
+          <div class="hint">Call-tracking data suggests ~30–40% of dental inbound calls are new-patient inquiries.</div>
+        </div>
+        <div class="field">
+          <label>New-patient call booking rate <output id="o-book">40%</output></label>
+          <input type="range" id="in-book" min="10" max="80" step="1" value="40">
+          <div class="hint">Average practices convert 35–45% of new-patient calls; top performers 60–75%.</div>
+        </div>
+      </div>
+      <div>
+        <div class="field">
+          <label>Average first-year value per new patient <output>$<span id="o-val">1,200</span></output></label>
+          <input type="range" id="in-val" min="300" max="3000" step="50" value="1200">
+          <div class="hint">Industry estimates: $800–$1,500 first year; ~$1,800+ two-year lifetime value (conservative).</div>
+        </div>
+        <div class="field">
+          <label>Front-desk hourly cost (loaded) <output>$<span id="o-staff">17</span>/hr</output></label>
+          <input type="range" id="in-staff" min="12" max="30" step="1" value="17">
+          <div class="hint">PayScale 2025: ~$16.71/hr avg for dental front desk with phone duties.</div>
+        </div>
+        <div class="field">
+          <label>Staff hours/week spent on phones <output id="o-hrs">15</output></label>
+          <input type="range" id="in-hrs" min="0" max="40" step="1" value="15">
+          <div class="hint">Your estimate: scheduling, reminders, insurance calls, callbacks.</div>
+        </div>
+        <div class="field">
+          <label>Share of missed bookings an AI agent could recover <output id="o-rec">60%</output></label>
+          <input type="range" id="in-rec" min="10" max="100" step="5" value="60">
+          <div class="hint"><b>Your judgment call.</b> AI answers instantly 24/7, but not every caller books. Be conservative.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2 &nbsp;·&nbsp; Live estimate</h2>
+    <div class="results">
+      <div class="kpi"><span class="k">Missed calls / month</span><span class="v neg" id="r-missed">180</span></div>
+      <div class="kpi"><span class="k">…of which new-patient inquiries</span><span class="v" id="r-newpt">54</span></div>
+      <div class="kpi"><span class="k">Lost bookings / month (at your booking rate)</span><span class="v neg" id="r-lost">22</span></div>
+      <div class="kpi hero-kpi"><span class="k">Estimated missed first-year revenue / month</span><span class="v neg" id="r-rev">$26,400</span></div>
+      <div class="kpi"><span class="k">Estimated missed revenue / year</span><span class="v neg" id="r-year">$316,800</span></div>
+      <div class="kpi"><span class="k">Potentially recoverable / month (at your recovery rate)</span><span class="v" id="r-rec">$15,840</span></div>
+      <div class="kpi"><span class="k">Typical AI voice-agent cost (DIY platforms, your call volume)</span><span class="v" id="r-ai">$179/mo</span></div>
+      <div class="kpi"><span class="k">Managed-service AI receptionist range (industry)</span><span class="v">$300 – $2,000/mo</span></div>
+      <div class="kpi"><span class="k">Monthly phone labor cost (staff)</span><span class="v" id="r-labor">$1,103</span></div>
+      <div class="kpi hero-kpi"><span class="k">Illustrative payback on DIY cost</span><span class="v" id="r-payback" style="color:var(--green)">~1 day</span></div>
+    </div>
+    <div class="callout">
+      <b>How to read this:</b> the payback figure divides the estimated monthly AI cost by the estimated <em>recoverable</em> revenue. It is an illustrative ratio, not a promise. Change the recovery-rate slider to stress-test it. See <a href="#method">methodology</a> and <a href="#limits">limitations</a>.
+    </div>
+  </div>
+
+  <div class="card" id="method">
+    <h2>3 &nbsp;·&nbsp; Methodology &amp; sourced assumptions</h2>
+    <p style="font-size:14px;color:var(--muted)">Defaults are set to mid-range industry figures, not best cases. Every number below is labeled: <span class="tier">F</span> verified fact with source · <span class="tier">E</span> estimate from sources · <span class="tier">A</span> our modeling assumption (adjust it).</p>
+    <table class="src">
+      <tr><th>Assumption</th><th>Default</th><th>Basis</th></tr>
+      <tr><td>Missed-call rate</td><td>30%</td><td><span class="tier">F</span> 20–35% during business hours (Dental Intel / Call Box via <a href="https://ainora.lt/blog/dental-practice-phone-call-statistics-2026">ainora.lt 2026</a>); 38% unanswered in Feb 2026 analysis of 4,280 calls across 26 practices (<a href="https://www.peerlogic.com/post/peerlogic-dso-case-study">Peerlogic</a>)</td></tr>
+      <tr><td>New-patient share of inbound calls</td><td>30%</td><td><span class="tier">E</span> ~30–40% per dental call-tracking analyses (<a href="https://axiomops.co/blog/dental-front-desk-missed-calls.html">axiomops.co</a>); 1-in-3 figure also cited by <a href="https://www.thrivingdentist.com/stop-losing-potential-new-patients-to-missed-calls/">Thriving Dentist</a></td></tr>
+      <tr><td>New-patient call booking rate</td><td>40%</td><td><span class="tier">F</span> 35–45% average, 60–75% top performers (<a href="https://ainora.lt/blog/dental-practice-phone-call-statistics-2026">ainora.lt 2026</a>); new-patient conversion ~25% in Peerlogic dataset</td></tr>
+      <tr><td>First-year patient value</td><td>$1,200</td><td><span class="tier">E</span> $800–$1,500 first year (<a href="https://www.lowcode.agency/blog/dental-ai-receptionist">lowcode.agency</a>); $1,800+ conservative 2-yr LTV (<a href="https://axiomops.co/blog/dental-front-desk-missed-calls.html">axiomops.co</a>); $200–$300 immediate revenue per missed call (<a href="https://www.peerlogic.com/post/peerlogic-dso-case-study">Patient Prism 2026</a>)</td></tr>
+      <tr><td>Front-desk hourly cost</td><td>$17/hr</td><td><span class="tier">F</span> $16.71/hr avg, range $12–$21 (PayScale 2025, <a href="https://www.payscale.com/research/US/Job=Front_Desk_Receptionist%2C_Medical_or_Dental_Office/Hourly_Rate/3a896e3e/Experienced-Phone-Support">medical/dental front desk w/ phone support</a>); DentalPost 2025 survey mean $25.43/hr</td></tr>
+      <tr><td>AI voice-agent DIY cost</td><td>$0.10/min</td><td><span class="tier">E</span> DIY platforms (Retell, Vapi, Bland) run $0.05–$0.15/min; managed services $300–$2,000/mo (<a href="https://github.com/jpiece3/brothers-automate-site/blob/HEAD/src/content/blog/ai-voice-agent-small-business-guide.md">2026 small-biz voice AI guide</a>); ~$40–$52/mo at 200 calls/mo (<a href="https://dev.to/midastools/vapi-vs-bland-ai-vs-retell-ai-which-voice-ai-platform-should-you-use-2026-2n9n">dev.to 2026 comparison</a>)</td></tr>
+      <tr><td>Avg. call length</td><td>2.5 min</td><td><span class="tier">A</span> modeling assumption: scheduling calls typically run 2–4 minutes</td></tr>
+      <tr><td>Recovery rate</td><td>60% (you set it)</td><td><span class="tier">A</span> deliberately user-controlled. AI answers instantly 24/7, but not every missed caller would have booked. Competitor-capture data: 82% of unanswered callers try a competitor (CallRail 2025 survey, <a href="https://ainora.lt/blog/dental-practice-phone-call-statistics-2026">via ainora.lt</a>)</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--muted)"><b>Formula:</b> missed calls = inbound × miss rate → missed new-patient inquiries = × new-patient share → lost bookings = × booking rate → missed revenue = × first-year value. Recoverable = missed revenue × recovery rate. DIY AI cost = inbound calls × 2.5 min × $0.10/min. Payback (days) = AI cost ÷ recoverable revenue × 30.</p>
+  </div>
+
+  <div class="card limits" id="limits">
+    <h2>4 &nbsp;·&nbsp; Honest limitations</h2>
+    <ul>
+      <li><b>These are illustrative estimates, not predictions.</b> Your actual missed-call rate, booking rate, and patient values will differ. Verify with your own phone logs before making any purchasing decision.</li>
+      <li><b>AI agents don't replace your front desk.</b> They handle after-hours and overflow calls well (scheduling, FAQs, reminders), but insurance verification edge cases, anxious patients, and complex treatment discussions still need humans. Most practices deploy AI as overflow + after-hours coverage, not replacement.</li>
+      <li><b>Healthcare compliance matters.</b> If the agent handles protected health information, you need a vendor willing to sign a HIPAA Business Associate Agreement (BAA). Confirm this before buying, as not all voice-AI platforms offer one.</li>
+      <li><b>Recovery rate is the swing variable.</b> An AI agent that answers instantly still can't book a caller who was price-shopping three competitors. We default to 60%, though many practices will see less.</li>
+      <li><b>Costs shown are platform usage only.</b> DIY platforms need setup time (typically 2–5 days of configuration); managed services ($300–$2,000/mo) include setup and maintenance but vary widely by vendor.</li>
+      <li><b>We are not affiliated with any vendor named here.</b> Pricing changes frequently, so verify current pricing on vendor sites before deciding.</li>
+    </ul>
+  </div>
+
+  <div class="cta">
+    <h2>Get the full vendor comparison</h2>
+    <p>We compared AI receptionist options for dental clinics on price, HIPAA readiness, scheduling integrations, and real setup effort: the details that don't fit in a calculator. Free, no spam.</p>
+    <!-- PLACEHOLDER: wire this form to an email provider (e.g., Buttondown, ConvertKit free tier) before publishing. Do not collect emails without a privacy policy. -->
+    <form action="#" method="post" onsubmit="return captureEmail(event)">
+      <input type="email" name="email" placeholder="you@yourclinic.com" required aria-label="Email address">
+      <button type="submit">Send me the comparison</button>
+    </form>
+    <p id="capture-msg" style="display:none;color:#fff;font-weight:600">Thanks. This is a demo form; no email was collected.</p>
+  </div>
+
+  <div class="card">
+    <h2>5 &nbsp;·&nbsp; Where to evaluate from here</h2>
+    <p style="font-size:14px;color:var(--muted)">If the math above looks interesting, the next step is a structured vendor evaluation, not a purchase. These are <b>placeholder links</b>; affiliate partnerships are not yet in place, and no commission is currently earned.</p>
+    <div class="vendors">
+      <div class="vendor-card">
+        <!-- AFFILIATE PLACEHOLDER: Gorgias: replace href with affiliate link ONLY after program approval (owner action required). Gorgias pays 20–40% rev share, 2-yr duration via PartnerStack. Note: Gorgias is ecommerce-focused; fit for dental voice is limited; evaluate fit honestly before promoting. -->
+        <h3>Gorgias</h3>
+        <p>AI support platform (20–40% affiliate rev share, 2-yr duration). Ecommerce-native, so assess dental fit carefully.</p>
+        <a class="btn" href="#" data-affiliate="gorgias" onclick="return placeholderLink(event,'Gorgias')">Compare Gorgias</a>
+      </div>
+      <div class="vendor-card">
+        <!-- AFFILIATE PLACEHOLDER: Freshworks (Freshdesk/Freshchat): replace href with affiliate link ONLY after program approval (owner action required). Freshworks pays 20–30% first-year commission. Omnichannel incl. voice/chat; stronger dental-adjacent fit. -->
+        <h3>Freshworks</h3>
+        <p>Omnichannel support incl. voice &amp; chat (20–30% first-year affiliate commission). Broader SMB fit.</p>
+        <a class="btn" href="#" data-affiliate="freshworks" onclick="return placeholderLink(event,'Freshworks')">Compare Freshworks</a>
+      </div>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted)">Also worth evaluating directly (no affiliate relationship): purpose-built dental voice agents (e.g., Patient Prism–style call analytics, Peerlogic) and DIY voice-AI platforms (Retell, Vapi, Bland): compare total cost at <em>your</em> call volume before deciding.</p>
+  </div>
+
+  <div class="disclosure" id="disclosure-full">
+    <b>Full affiliate disclosure:</b> This page is part of an independent evaluation project. Affiliate links are currently placeholders; we earn no commission today. If affiliate partnerships are added later, this disclosure will be updated and links will be labeled. Estimates on this page are illustrative; we have not tested every vendor listed. Last updated September 2026.
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Good Company. Independent evaluation project. Not medical, legal, or financial advice. All figures are estimates based on the sourced assumptions above; verify with your own practice data. Vendor names are trademarks of their respective owners; nominative use for comparison only.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt$ = function(n){ return "$" + Math.round(n).toLocaleString("en-US"); };
+  var fmtN = function(n){ return Math.round(n).toLocaleString("en-US"); };
+
+  function calc(){
+    var C = +$("in-calls").value;
+    var M = +$("in-miss").value / 100;
+    var N = +$("in-new").value / 100;
+    var B = +$("in-book").value / 100;
+    var V = +$("in-val").value;
+    var S = +$("in-staff").value;
+    var H = +$("in-hrs").value;
+    var R = +$("in-rec").value / 100;
+    var MIN_PER_CALL = 2.5;   // assumption, documented
+    var AI_PER_MIN = 0.10;    // assumption, documented
+
+    $("o-calls").textContent = fmtN(C);
+    $("o-miss").textContent = $("in-miss").value + "%";
+    $("o-new").textContent = $("in-new").value + "%";
+    $("o-book").textContent = $("in-book").value + "%";
+    $("o-val").textContent = fmtN(V);
+    $("o-staff").textContent = S;
+    $("o-hrs").textContent = H;
+    $("o-rec").textContent = $("in-rec").value + "%";
+
+    var missed = C * M;
+    var missedNew = missed * N;
+    var lostBookings = Math.round(missedNew * B);
+    var missedRev = lostBookings * V;
+    var recoverable = missedRev * R;
+    var aiCost = C * MIN_PER_CALL * AI_PER_MIN;
+    var laborCost = H * 4.33 * S;
+
+    $("r-missed").textContent = fmtN(missed);
+    $("r-newpt").textContent = fmtN(missedNew);
+    $("r-lost").textContent = fmtN(lostBookings);
+    $("r-rev").textContent = fmt$(missedRev);
+    $("r-year").textContent = fmt$(missedRev * 12);
+    $("r-rec").textContent = fmt$(recoverable);
+    $("r-ai").textContent = fmt$(aiCost) + "/mo";
+    $("r-labor").textContent = fmt$(laborCost);
+
+    var pb = $("r-payback");
+    if (recoverable > aiCost && recoverable > 0) {
+      var days = aiCost / recoverable * 30;
+      pb.textContent = days < 1 ? "< 1 day" : "~" + Math.max(1, Math.round(days)) + (Math.round(days) === 1 ? " day" : " days");
+      pb.style.color = "var(--green)";
+    } else if (recoverable > 0) {
+      pb.textContent = "No payback at these inputs";
+      pb.style.color = "var(--red)";
+    } else {
+      pb.textContent = "-";
+      pb.style.color = "var(--muted)";
+    }
+  }
+
+  ["in-calls","in-miss","in-new","in-book","in-val","in-staff","in-hrs","in-rec"].forEach(function(id){
+    $(id).addEventListener("input", calc);
+  });
+  calc();
+
+  window.captureEmail = function(e){
+    e.preventDefault();
+    $("capture-msg").style.display = "block";
+    return false;
+  };
+  window.placeholderLink = function(e, name){
+    e.preventDefault();
+    alert(name + " link is a placeholder. Affiliate partnership not yet established. No commission earned.");
+    return false;
+  };
+})();
+</script>
+</body>
+</html>
